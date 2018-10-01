@@ -12,12 +12,13 @@ class User{
     var name: String
     var screenName: String
     var id: Int64
+    var profileURLPath: URL
     
     init(dictionary: [String: Any]) {
         name = (dictionary["name"] as? String)!
         screenName = (dictionary["screen_name"] as? String)!
         id = dictionary["id"] as! Int64
-        // Initialize any other properties
+        profileURLPath = URL(string: dictionary["profile_image_url_https"] as! String)!
     }
     
     static var current: User?{
