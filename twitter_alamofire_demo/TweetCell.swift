@@ -17,7 +17,6 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var username: UILabel!
     @IBOutlet weak var screenName: UILabel!
     @IBOutlet weak var tweetMessage: UILabel!
-//    @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var favoriteCount: UILabel!
     @IBOutlet weak var retweetCount: UILabel!
     
@@ -25,8 +24,7 @@ class TweetCell: UITableViewCell {
         didSet{
             tweetMessage.text = tweet.text
             username.text = tweet.user?.name
-            screenName.text = "@\(tweet.user!.screenName) \(tweet.createdAtString!)"
-//            timestamp.text = tweet.createdAtString
+            screenName.text = "@\(tweet.user!.screenName) - \(tweet.createdAtString!)"
             if let cnt = tweet.favoriteCount{
                 favoriteCount.text = String(cnt)
             }
@@ -112,6 +110,12 @@ class TweetCell: UITableViewCell {
         // Initialization code
         profileImageView.layer.cornerRadius = 3
         profileImageView.clipsToBounds = true
+        tweetMessage.preferredMaxLayoutWidth = tweetMessage.frame.size.width
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tweetMessage.preferredMaxLayoutWidth = tweetMessage.frame.size.width
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
