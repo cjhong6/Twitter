@@ -13,12 +13,18 @@ class User{
     var screenName: String
     var id: Int64
     var profileURLPath: URL
+    var followers_count: Int
+    var following_count : Int
+    var tweet_count : Int
     
     init(dictionary: [String: Any]) {
         name = (dictionary["name"] as? String)!
         screenName = (dictionary["screen_name"] as? String)!
         id = dictionary["id"] as! Int64
         profileURLPath = URL(string: dictionary["profile_image_url_https"] as! String)!
+        followers_count = dictionary["followers_count"] as! Int
+        following_count = dictionary["friends_count"] as! Int
+        tweet_count = dictionary["statuses_count"] as! Int
     }
     
     static var current: User?{

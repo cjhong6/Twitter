@@ -16,7 +16,6 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
@@ -42,7 +41,11 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return tweets.count
     }
-
+    
+    @IBAction func tapCompose(_ sender: Any) {
+        self.performSegue(withIdentifier: "ComposeViewController", sender: nil)
+    }
+    
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
@@ -67,5 +70,16 @@ class TimelineViewController: UIViewController, UITableViewDataSource {
         getHomeline()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "detailSegue"){
+            let cell = sender as! UITableViewCell
+            if let indexPath = tableView.indexPath(for: cell){
+                let tweet = tweets[indexPath.row]
+                let tweetDeatilViewController = segue.destination as! TweetDetailViewController
+                tweetDeatilViewController.tweet = tweet
+            }
+        }
+
+    }
 
 }
